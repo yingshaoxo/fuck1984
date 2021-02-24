@@ -25,3 +25,8 @@ Encode and Decode folders with password.
 
 ## Example
 ![image](show.png)
+
+## Run
+```
+go run main.go alg.go
+```

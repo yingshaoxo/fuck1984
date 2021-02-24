@@ -6,8 +6,9 @@ import (
 	"crypto/rc4"
 	"encoding/hex"
 	"fmt"
-	"github.com/esrrhs/go-engine/src/loggo"
+	//"github.com/esrrhs/go-engine/src/loggo"
 	"github.com/esrrhs/go-engine/src/rbuffergo"
+	//"github.com/yingshaoxo/go-engine/src/rbuffergo"
 	"io"
 	"io/ioutil"
 	"math"
@@ -43,12 +44,12 @@ func getallfiles(pathname string, s []string) ([]string, error) {
 }
 
 func showError(err error) {
-	loggo.Error("%v", err)
+	//loggo.Error("%v", err)
 	panic(err.Error())
 }
 
 func showErrorStr(err string) {
-	loggo.Error("%v", err)
+	//loggo.Error("%v", err)
 	panic(err)
 }
 
@@ -66,9 +67,9 @@ func dojob(jobtotal *int32, jobdone *int32, filetotal *int64, filedone *int64, i
 	done = make(map[string]int)
 	var workResultLock sync.WaitGroup
 
-	loggo.Ini(loggo.Config{Level: loggo.LEVEL_DEBUG, Prefix: "fuck", MaxDay: 2})
+	//loggo.Ini(loggo.Config{Level: loggo.LEVEL_DEBUG, Prefix: "fuck", MaxDay: 2})
 
-	loggo.Info("start")
+	//loggo.Info("start")
 
 	if strings.Contains(output, input) || strings.Contains(input, output) {
 		showErrorStr("输入输出目录有重叠")
@@ -77,17 +78,17 @@ func dojob(jobtotal *int32, jobdone *int32, filetotal *int64, filedone *int64, i
 
 	var s []string
 
-	loggo.Info("get all file begin %v", input)
+	//loggo.Info("get all file begin %v", input)
 
 	s, err := getallfiles(input+"/", s)
 	if err != nil {
 		showError(err)
 	}
 
-	loggo.Info("get all file done %v", len(s))
+	//loggo.Info("get all file done %v", len(s))
 
 	loadDone(output, done)
-	loggo.Info("loadDone %v", len(done))
+	//loggo.Info("loadDone %v", len(done))
 
 	total := 0
 	for _, ss := range s {
@@ -99,7 +100,7 @@ func dojob(jobtotal *int32, jobdone *int32, filetotal *int64, filedone *int64, i
 		total++
 	}
 
-	loggo.Info("all file total %v", total)
+	//loggo.Info("all file total %v", total)
 
 	var num int32
 
@@ -121,7 +122,7 @@ func dojob(jobtotal *int32, jobdone *int32, filetotal *int64, filedone *int64, i
 		}
 	}
 
-	loggo.Info("all job file jobtotal %v", *jobtotal)
+	//loggo.Info("all job file jobtotal %v", *jobtotal)
 
 	for _, ss := range s {
 
@@ -151,7 +152,7 @@ func defuck(workResultLock sync.WaitGroup, num *int32, key string, split int, ss
 
 	ss = filepath.FromSlash(ss)
 	ss = filepath.Clean(ss)
-	loggo.Info("start back : %v", ss)
+	//loggo.Info("start back : %v", ss)
 
 	if flag {
 		defer workResultLock.Done()
@@ -160,7 +161,7 @@ func defuck(workResultLock sync.WaitGroup, num *int32, key string, split int, ss
 
 	if done[ss] == 1 {
 		atomic.AddInt32(jobdone, 1)
-		loggo.Info("end back skip done : %v/%v %v", *jobdone, *jobtotal, ss)
+		//loggo.Info("end back skip done : %v/%v %v", *jobdone, *jobtotal, ss)
 		return
 	}
 
@@ -184,7 +185,7 @@ func defuck(workResultLock sync.WaitGroup, num *int32, key string, split int, ss
 		if !fi.IsDir() {
 			m, _ := filepath.Match("*.fuck1984.*", fi.Name())
 			if m {
-				loggo.Info("back add split: %v %v", ss, fi.Name())
+				//loggo.Info("back add split: %v %v", ss, fi.Name())
 				name := inputfolderPath + "/" + fi.Name()
 				son = append(son, filepath.FromSlash(name))
 			}
@@ -247,7 +248,7 @@ func defuck(workResultLock sync.WaitGroup, num *int32, key string, split int, ss
 					}
 					*filedone = 0
 					*filetotal = fi.Size()
-					loggo.Info("start back : %v", ss+"."+strconv.Itoa(post))
+					//loggo.Info("start back : %v", ss+"."+strconv.Itoa(post))
 					continue
 				} else {
 					fileend = true
@@ -299,7 +300,7 @@ func defuck(workResultLock sync.WaitGroup, num *int32, key string, split int, ss
 	done[ss] = 1
 	saveDone(output, ss)
 
-	loggo.Info("end back : %v/%v %v", *jobdone, *jobtotal, ss)
+	//loggo.Info("end back : %v/%v %v", *jobdone, *jobtotal, ss)
 }
 
 func saveDone(output string, ss string) {
@@ -314,7 +315,7 @@ func saveDone(output string, ss string) {
 	wd.WriteString(filepath.FromSlash(ss) + "\n")
 	wd.Flush()
 
-	loggo.Info("save Done %v", filepath.FromSlash(ss))
+	//loggo.Info("save Done %v", filepath.FromSlash(ss))
 
 	file.Close()
 }
@@ -348,7 +349,7 @@ func loadDone(output string, done map[string]int) {
 		name := filepath.FromSlash(line)
 		name = strings.TrimSpace(name)
 		done[name] = 1
-		loggo.Info("load Done %v", name)
+		//loggo.Info("load Done %v", name)
 	}
 
 	file.Close()
@@ -358,7 +359,7 @@ func fuckverify(key string, ss string, filetotal *int64, filedone *int64, md5str
 
 	ss = filepath.FromSlash(ss)
 	ss = filepath.Clean(ss)
-	loggo.Info("start fuckverify : %v", ss)
+	//loggo.Info("start fuckverify : %v", ss)
 
 	inputfolderPath := filepath.Dir(ss)
 
@@ -372,7 +373,7 @@ func fuckverify(key string, ss string, filetotal *int64, filedone *int64, md5str
 		if !fi.IsDir() {
 			m, _ := filepath.Match("*.fuck1984.*", fi.Name())
 			if m {
-				loggo.Info("back add split: %v %v", ss, fi.Name())
+				//loggo.Info("back add split: %v %v", ss, fi.Name())
 				name := inputfolderPath + "/" + fi.Name()
 				son = append(son, filepath.FromSlash(name))
 			}
@@ -429,7 +430,7 @@ func fuckverify(key string, ss string, filetotal *int64, filedone *int64, md5str
 					}
 					*filedone = 0
 					*filetotal = fi.Size()
-					loggo.Info("start back : %v", ss+"."+strconv.Itoa(post))
+					//loggo.Info("start back : %v", ss+"."+strconv.Itoa(post))
 					continue
 				} else {
 					fileend = true
@@ -473,7 +474,7 @@ func fuckverify(key string, ss string, filetotal *int64, filedone *int64, md5str
 		showErrorStr("fuckverify fail " + ss)
 	}
 
-	loggo.Info("fuckverify ok: %v", ss)
+	//loggo.Info("fuckverify ok: %v", ss)
 }
 
 func fuck(workResultLock sync.WaitGroup, num *int32, key string, split int, ss string, flag bool,
@@ -482,7 +483,7 @@ func fuck(workResultLock sync.WaitGroup, num *int32, key string, split int, ss s
 
 	ss = filepath.FromSlash(ss)
 	ss = filepath.Clean(ss)
-	loggo.Info("start fuck : %v", ss)
+	//loggo.Info("start fuck : %v", ss)
 
 	if flag {
 		defer workResultLock.Done()
@@ -491,14 +492,14 @@ func fuck(workResultLock sync.WaitGroup, num *int32, key string, split int, ss s
 
 	if done[ss] == 1 {
 		atomic.AddInt32(jobdone, 1)
-		loggo.Info("end fuck skip done : %v/%v %v", *jobdone, *jobtotal, ss)
+		//loggo.Info("end fuck skip done : %v/%v %v", *jobdone, *jobtotal, ss)
 		return
 	}
 
 	m, _ := filepath.Match("*.fuck1984.*", filepath.Base(ss))
 	if m {
 		atomic.AddInt32(jobdone, 1)
-		loggo.Info("end fuck skip split: %v/%v %v", *jobdone, *jobtotal, ss)
+		//loggo.Info("end fuck skip split: %v/%v %v", *jobdone, *jobtotal, ss)
 		return
 	}
 
@@ -590,7 +591,7 @@ func fuck(workResultLock sync.WaitGroup, num *int32, key string, split int, ss s
 				bufferedWriter = bufio.NewWriter(ofile)
 				post++
 				cur -= split
-				loggo.Info("start fuck : %v", outputss+".fuck1984"+"."+strconv.Itoa(post))
+				//loggo.Info("start fuck : %v", outputss+".fuck1984"+"."+strconv.Itoa(post))
 			}
 
 			numBytesWrite, err := bufferedWriter.Write(d)
@@ -616,7 +617,7 @@ func fuck(workResultLock sync.WaitGroup, num *int32, key string, split int, ss s
 	done[ss] = 1
 	saveDone(output, ss)
 
-	loggo.Info("end fuck : %v/%v %v", *jobdone, *jobtotal, ss)
+	//loggo.Info("end fuck : %v/%v %v", *jobdone, *jobtotal, ss)
 }
 
 func createHash(key string) string {
