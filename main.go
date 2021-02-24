@@ -20,48 +20,48 @@ func main() {
 
 	echoGroup := widgets.NewQGroupBox2("", nil)
 
-	inputLabel := widgets.NewQLabel2("输入：", nil, 0)
+	inputLabel := widgets.NewQLabel2("Input Folder：", nil, 0)
 	input := widgets.NewQLineEdit(nil)
 	input.SetText(filepath.Dir(os.Args[0]))
 
-	outputLabel := widgets.NewQLabel2("输出：", nil, 0)
+	outputLabel := widgets.NewQLabel2("Output Folder：", nil, 0)
 	output := widgets.NewQLineEdit(nil)
 
-	inputButton := widgets.NewQPushButton2("选择", nil)
-	outputButton := widgets.NewQPushButton2("选择", nil)
+	inputButton := widgets.NewQPushButton2("select", nil)
+	outputButton := widgets.NewQPushButton2("select", nil)
 
 	inputButton.ConnectClicked(func(checked bool) {
-		w := widgets.NewQFileDialog2(nil, "选择输入目录", "", "")
+		w := widgets.NewQFileDialog2(nil, "Please select the input folder", "", "")
 		w.SetFileMode(widgets.QFileDialog__DirectoryOnly)
-		input.SetText(w.GetExistingDirectory(nil, "选择输入目录", "", 0) + "/")
+		input.SetText(w.GetExistingDirectory(nil, "Please select the input folder", "", 0) + "/")
 	})
 	outputButton.ConnectClicked(func(checked bool) {
-		w := widgets.NewQFileDialog2(nil, "选择输出目录", "", "")
+		w := widgets.NewQFileDialog2(nil, "Please select the output folder", "", "")
 		w.SetFileMode(widgets.QFileDialog__DirectoryOnly)
-		output.SetText(w.GetExistingDirectory(nil, "选择输出目录", "", 0) + "/")
+		output.SetText(w.GetExistingDirectory(nil, "Please select the output folder", "", 0) + "/")
 	})
 
-	passLabel := widgets.NewQLabel2("密码：", nil, 0)
+	passLabel := widgets.NewQLabel2("Password：", nil, 0)
 	pass := widgets.NewQLineEdit(nil)
 	pass.SetText("123456")
 
 	split := widgets.NewQComboBox(nil)
 	split.AddItems([]string{"1G", "4G", "10G", "20G"})
 	do := widgets.NewQComboBox(nil)
-	do.AddItems([]string{"加密", "解密"})
-	fuckButton := widgets.NewQPushButton2("GO", nil)
+	do.AddItems([]string{"encrypt", "decrypt"})
+	fuckButton := widgets.NewQPushButton2("Do it Now !", nil)
 
 	cur := widgets.NewQProgressBar(nil)
 	curf := widgets.NewQProgressBar(nil)
-	swapButton := widgets.NewQPushButton2("交换", nil)
+	swapButton := widgets.NewQPushButton2("Switch to encrypt/decrypt", nil)
 	swapButton.ConnectClicked(func(checked bool) {
 		tmp := input.Text()
 		input.SetText(output.Text())
 		output.SetText(tmp)
-		if do.CurrentText() == "加密" {
-			do.SetCurrentText("解密")
+		if do.CurrentText() == "encrypt" {
+			do.SetCurrentText("decrypt")
 		} else {
-			do.SetCurrentText("加密")
+			do.SetCurrentText("encrypt")
 		}
 	})
 
@@ -135,13 +135,13 @@ func main() {
 
 			split, _ := strconv.Atoi(strings.TrimRight(split.CurrentText(), "G"))
 
-			dojob(jobtotal, jobdone, filetotal, filedone, input.Text(), output.Text(), do.CurrentText() == "加密", pass.Text(),
+			dojob(jobtotal, jobdone, filetotal, filedone, input.Text(), output.Text(), do.CurrentText() == "encrypt", pass.Text(),
 				1000*1000*1000*split)
 
 			cur.SetValue(100)
 			curf.SetValue(100)
 
-			*errstr = "ok"
+			*errstr = "Done"
 		}()
 
 	})
@@ -181,7 +181,7 @@ func main() {
 	centralWidget.SetLayout(layout)
 	window.SetCentralWidget(centralWidget)
 	window.SetMinimumWidth(500)
-	window.SetWindowTitle("fuck baiduyun")
+	window.SetWindowTitle("fuck 1984")
 	window.Show()
 
 	widgets.QApplication_Exec()
@@ -198,7 +198,7 @@ type Config struct {
 var gConfig Config
 
 func saveJson(c Config) {
-	jsonFile, err := os.OpenFile(".fuckbaiduyun.json",
+	jsonFile, err := os.OpenFile(".fuck1984.json",
 		os.O_WRONLY|os.O_CREATE|os.O_TRUNC, 0666)
 	if err != nil {
 		return
@@ -213,7 +213,7 @@ func saveJson(c Config) {
 
 }
 func loadJson() *Config {
-	jsonFile, err := os.Open(".fuckbaiduyun.json")
+	jsonFile, err := os.Open(".fuck1984.json")
 	if err != nil {
 		return nil
 	}

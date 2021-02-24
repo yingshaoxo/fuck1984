@@ -92,7 +92,7 @@ func dojob(jobtotal *int32, jobdone *int32, filetotal *int64, filedone *int64, i
 	total := 0
 	for _, ss := range s {
 
-		if strings.HasPrefix(filepath.Base(ss), "fuckbaiduyun") {
+		if strings.HasPrefix(filepath.Base(ss), "fuck1984") {
 			continue
 		}
 
@@ -107,10 +107,10 @@ func dojob(jobtotal *int32, jobdone *int32, filetotal *int64, filedone *int64, i
 
 	for _, ss := range s {
 
-		if strings.HasPrefix(filepath.Base(ss), "fuckbaiduyun") {
+		if strings.HasPrefix(filepath.Base(ss), "fuck1984") {
 			continue
 		}
-		if strings.HasSuffix(filepath.Base(ss), "fuckbaiduyun") {
+		if strings.HasSuffix(filepath.Base(ss), "fuck1984") {
 			if !doen {
 				*jobtotal++
 			}
@@ -125,10 +125,10 @@ func dojob(jobtotal *int32, jobdone *int32, filetotal *int64, filedone *int64, i
 
 	for _, ss := range s {
 
-		if strings.HasPrefix(filepath.Base(ss), "fuckbaiduyun") {
+		if strings.HasPrefix(filepath.Base(ss), "fuck1984") {
 			continue
 		}
-		if strings.HasSuffix(filepath.Base(ss), "fuckbaiduyun") {
+		if strings.HasSuffix(filepath.Base(ss), "fuck1984") {
 			if !doen {
 				defuck(workResultLock, &num, key, split, ss, false,
 					jobdone, jobtotal, done, input, output, filetotal, filedone)
@@ -164,7 +164,7 @@ func defuck(workResultLock sync.WaitGroup, num *int32, key string, split int, ss
 		return
 	}
 
-	outputss := strings.Replace(strings.TrimSuffix(ss, ".fuckbaiduyun"), input, output, -1)
+	outputss := strings.Replace(strings.TrimSuffix(ss, ".fuck1984"), input, output, -1)
 	folderPath := filepath.Dir(outputss)
 	os.MkdirAll(folderPath, os.ModePerm)
 
@@ -182,7 +182,7 @@ func defuck(workResultLock sync.WaitGroup, num *int32, key string, split int, ss
 	}
 	for _, fi := range rd {
 		if !fi.IsDir() {
-			m, _ := filepath.Match("*.fuckbaiduyun.*", fi.Name())
+			m, _ := filepath.Match("*.fuck1984.*", fi.Name())
 			if m {
 				loggo.Info("back add split: %v %v", ss, fi.Name())
 				name := inputfolderPath + "/" + fi.Name()
@@ -304,7 +304,7 @@ func defuck(workResultLock sync.WaitGroup, num *int32, key string, split int, ss
 
 func saveDone(output string, ss string) {
 
-	name := filepath.FromSlash(output + "/fuckbaiduyunDONE")
+	name := filepath.FromSlash(output + "/fuck1984DONE")
 	file, err := os.OpenFile(name, os.O_WRONLY|os.O_CREATE|os.O_APPEND, 0666)
 	if err != nil {
 		showError(err)
@@ -320,7 +320,7 @@ func saveDone(output string, ss string) {
 }
 
 func delDone(output string) {
-	name := filepath.FromSlash(output + "/fuckbaiduyunDONE")
+	name := filepath.FromSlash(output + "/fuck1984DONE")
 	os.Remove(name)
 }
 
@@ -328,7 +328,7 @@ func loadDone(output string, done map[string]int) {
 
 	os.MkdirAll(output, os.ModePerm)
 
-	name := filepath.FromSlash(output + "/fuckbaiduyunDONE")
+	name := filepath.FromSlash(output + "/fuck1984DONE")
 	file, err := os.Open(name)
 	if err != nil {
 		file, err = os.OpenFile(name, os.O_RDWR|os.O_CREATE|os.O_TRUNC, 0666)
@@ -370,7 +370,7 @@ func fuckverify(key string, ss string, filetotal *int64, filedone *int64, md5str
 	}
 	for _, fi := range rd {
 		if !fi.IsDir() {
-			m, _ := filepath.Match("*.fuckbaiduyun.*", fi.Name())
+			m, _ := filepath.Match("*.fuck1984.*", fi.Name())
 			if m {
 				loggo.Info("back add split: %v %v", ss, fi.Name())
 				name := inputfolderPath + "/" + fi.Name()
@@ -495,7 +495,7 @@ func fuck(workResultLock sync.WaitGroup, num *int32, key string, split int, ss s
 		return
 	}
 
-	m, _ := filepath.Match("*.fuckbaiduyun.*", filepath.Base(ss))
+	m, _ := filepath.Match("*.fuck1984.*", filepath.Base(ss))
 	if m {
 		atomic.AddInt32(jobdone, 1)
 		loggo.Info("end fuck skip split: %v/%v %v", *jobdone, *jobtotal, ss)
@@ -516,7 +516,7 @@ func fuck(workResultLock sync.WaitGroup, num *int32, key string, split int, ss s
 	}
 
 	// Open file for writing
-	ofile, err := os.OpenFile(outputss+".fuckbaiduyun",
+	ofile, err := os.OpenFile(outputss+".fuck1984",
 		os.O_WRONLY|os.O_CREATE|os.O_TRUNC, 0666)
 	if err != nil {
 		showError(err)
@@ -582,7 +582,7 @@ func fuck(workResultLock sync.WaitGroup, num *int32, key string, split int, ss s
 			if cur > split {
 				ofile.Close()
 				bufferedWriter.Flush()
-				ofile, err = os.OpenFile(outputss+".fuckbaiduyun"+"."+strconv.Itoa(post),
+				ofile, err = os.OpenFile(outputss+".fuck1984"+"."+strconv.Itoa(post),
 					os.O_WRONLY|os.O_CREATE|os.O_TRUNC, 0666)
 				if err != nil {
 					showError(err)
@@ -590,7 +590,7 @@ func fuck(workResultLock sync.WaitGroup, num *int32, key string, split int, ss s
 				bufferedWriter = bufio.NewWriter(ofile)
 				post++
 				cur -= split
-				loggo.Info("start fuck : %v", outputss+".fuckbaiduyun"+"."+strconv.Itoa(post))
+				loggo.Info("start fuck : %v", outputss+".fuck1984"+"."+strconv.Itoa(post))
 			}
 
 			numBytesWrite, err := bufferedWriter.Write(d)
@@ -609,7 +609,7 @@ func fuck(workResultLock sync.WaitGroup, num *int32, key string, split int, ss s
 	ofile.Close()
 
 	md5str := fmt.Sprintf("%x", h.Sum(nil))
-	fuckverify(key, outputss+".fuckbaiduyun", filetotal, filedone, md5str)
+	fuckverify(key, outputss+".fuck1984", filetotal, filedone, md5str)
 
 	atomic.AddInt32(jobdone, 1)
 
